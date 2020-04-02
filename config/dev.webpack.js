@@ -6,7 +6,7 @@ const basePath = path.join(__dirname,'../', 'src')
 
 module.exports = {
     mode: 'development',
-
+    devtool: 'inline-source-map',
     entry: {
       main: path.join(basePath, 'index.js'),
     },
@@ -66,19 +66,25 @@ module.exports = {
     },
     plugins: [
         new HtmlPlugin({
-          title: 'Preact minimal',
-          template: path.join(basePath, 'index.html'),
+          template: path.join(basePath, 'template.html'),
         }),
       ],
 
       
     resolve: {
-        extensions: ['.js', '.jsx'],
+       
+          alias: {
+            "react": "preact/compat",
+            "react-dom": "preact/compat"
+          }
+        
       },
     devServer: {
         contentBase: basePath,
         compress: true,
         port: 9000,
-        stats: 'minimal' //'errors-only'
+        stats: 'minimal', //'errors-only'
+        historyApiFallback: true
+
     }
 };
